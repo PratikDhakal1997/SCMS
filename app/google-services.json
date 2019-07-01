@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "211158857281",
+    "firebase_url": "https://stms-9e249.firebaseio.com",
+    "project_id": "stms-9e249",
+    "storage_bucket": "stms-9e249.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:211158857281:android:abf686ec879d775c",
+        "android_client_info": {
+          "package_name": "com.sparkycuber.stms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "211158857281-r4udaqj7j4ufgtjpdt3vu35g04vh7rk2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sparkycuber.stms",
+            "certificate_hash": "f1b27775dadd82ed2dca9cb935fb0c0963339ea8"
+          }
+        },
+        {
+          "client_id": "211158857281-b8dtlq8fjlc1e4b3pujui3n21fkp9luo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCuCQa5isZqZ1m2xP8qacHgiX7DmkcQbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "211158857281-b8dtlq8fjlc1e4b3pujui3n21fkp9luo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

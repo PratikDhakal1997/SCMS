@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">STMS</string>
     <string name="title_activity_maps">Map</string>
+    <string name="channel_name">notify</string>
+    <string name="channel_description">this is notification</string>
 </resources>

@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -18,6 +19,8 @@ import android.location.Location;
 import com.firebase.geofire.GeoQuery;
 import com.firebase.geofire.GeoQueryEventListener;
 import com.google.android.gms.location.LocationListener;
+
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -37,6 +40,8 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -66,6 +71,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     DatabaseReference ref;
     GeoFire geoFire;
 
+
     Marker mCurrent;
 
     @Override
@@ -81,6 +87,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         geoFire =new  GeoFire (ref);
 
         setUpLocation();
+
     }
 
     @Override
@@ -149,7 +156,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                             .position(new LatLng(latitude,longitude))
                                             .title("You"));
                                     //move camera to this position
-                                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),12.0f));
+                                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),17.0f));
 
                                 }
 
@@ -157,10 +164,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
-            Log.d("EDMTSEV",String.format("Your location was changed : %f / %f",latitude,longitude));
+            Log.d("SCMS",String.format("Your location was changed : %f / %f",latitude,longitude));
         }
         else
-            Log.d("EDMTSEV","Can't get your location");
+            Log.d("SCMS","Can't get your location");
 
     }
 
@@ -206,10 +213,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         //create dangerous area
-        LatLng dangerous_area = new LatLng(37.7533, -122.4056);
+        LatLng dangerous_area = new LatLng(27.688828, 85.316173);
         mMap.addCircle(new CircleOptions()
+
                 .center(dangerous_area)
-                .radius(500)   //in meters  =>500 m
+                .radius(10)   //in meters  =>500 m
                 .strokeColor(Color.BLUE)
                 .fillColor(0x220000FF)
                 .strokeWidth(5.0f)
@@ -218,16 +226,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Add geoquery here
         //0.5f =0.5 km = 500 m
-        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(dangerous_area.latitude, dangerous_area.longitude), 0.5f);
+        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(dangerous_area.latitude, dangerous_area.longitude), 0.01f);
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
             @Override
             public void onKeyEntered(String key, GeoLocation location) {
-                sendNotfication("EDMTDEV", String.format("%s entered the dangerous area", key));
+                sendNotfication("SCMS", String.format("%s entered the dangerous area", key));
             }
 
             @Override
             public void onKeyExited(String key) {
-                sendNotfication("EDMTDEV", String.format("%s is no longer in the dangerous area", key));
+                sendNotfication("SCMS", String.format("%s is no longer in the dangerous area", key));
             }
 
             @Override
@@ -248,6 +256,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         });
     }
+
 
     private void sendNotfication(String title, String content) {
         Notification.Builder builder = new Notification.Builder(this)

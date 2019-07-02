@@ -217,7 +217,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addCircle(new CircleOptions()
 
                 .center(dangerous_area)
-                .radius(10)   //in meters  =>500 m
+                .radius(10)   //in meters  =>10 m
                 .strokeColor(Color.BLUE)
                 .fillColor(0x220000FF)
                 .strokeWidth(5.0f)

@@ -230,12 +230,52 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
             @Override
             public void onKeyEntered(String key, GeoLocation location) {
-                sendNotfication("SCMS", String.format("%s entered the dangerous area", key));
+                sendNotfication("SCMS", String.format("%s entered the first geofence", key));
             }
 
             @Override
             public void onKeyExited(String key) {
-                sendNotfication("SCMS", String.format("%s is no longer in the dangerous area", key));
+                sendNotfication("SCMS", String.format("%s is no longer in the first geofence", key));
+            }
+
+            @Override
+            public void onKeyMoved(String key, GeoLocation location) {
+                Log.d("MOVE", String.format("%s moved within the dangerous area [%f/%f]", key, location.latitude, location.longitude));
+            }
+
+            @Override
+            public void onGeoQueryReady() {
+
+            }
+
+            @Override
+            public void onGeoQueryError(DatabaseError error) {
+                Log.e("ERROR", "" + error);
+
+            }
+
+        });
+
+        LatLng dangerous_area2 = new LatLng(27.690216, 85.317379);
+        mMap.addCircle(new CircleOptions()
+
+                .center(dangerous_area2)
+                .radius(10)   //in meters  =>10 m
+                .strokeColor(Color.BLUE)
+                .fillColor(0x220000FF)
+                .strokeWidth(5.0f)
+
+        );
+        GeoQuery geoQuery2 = geoFire.queryAtLocation(new GeoLocation(dangerous_area2.latitude, dangerous_area2.longitude), 0.01f);
+        geoQuery2.addGeoQueryEventListener(new GeoQueryEventListener() {
+            @Override
+            public void onKeyEntered(String key, GeoLocation location) {
+                sendNotfication("SCMS", String.format("%s entered the 2nd geofence", key));
+            }
+
+            @Override
+            public void onKeyExited(String key) {
+                sendNotfication("SCMS", String.format("%s is no longer in 2nd geofence", key));
             }
 
             @Override

@@ -259,6 +259,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 sendNotfication("SCMS", String.format("%s is no longer in the first geofence", key));
                 DatabaseReference ktDelete=FirebaseDatabase.getInstance().getReference("geolocation").child("Kupondol").child(String.valueOf(maxid));
                 ktDelete.removeValue();
+                maxid=maxid-1;
 
             }
 

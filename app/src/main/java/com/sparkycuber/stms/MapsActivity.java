@@ -42,9 +42,11 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Random;
 
@@ -54,6 +56,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LocationListener {
 
     private GoogleMap mMap;
+
 
 
     //Play Service Location
@@ -68,7 +71,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static int FATEST_INTERVAL = 3000;
     private static int DISPLACEMENT = 10;
 
-    DatabaseReference ref;
+    DatabaseReference ref,kupondolref;// change 1
+    long maxid=0; //change 1.1
     GeoFire geoFire;
 
 
@@ -84,7 +88,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         ref= FirebaseDatabase.getInstance().getReference("MyLocation");
+        kupondolref=FirebaseDatabase.getInstance().getReference("geolocation").child("Kupondol");//change 2,,change5
+        //firebase from here change 3
+        kupondolref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists())
+                    maxid= (dataSnapshot.getChildrenCount());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        //change 2 ends
         geoFire =new  GeoFire (ref);
+
 
         setUpLocation();
 
@@ -231,11 +251,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onKeyEntered(String key, GeoLocation location) {
                 sendNotfication("SCMS", String.format("%s entered the first geofence", key));
+                kupondolref.child(String.valueOf(maxid+1)).setValue("");//change 3
             }
 
             @Override
             public void onKeyExited(String key) {
                 sendNotfication("SCMS", String.format("%s is no longer in the first geofence", key));
+                DatabaseReference ktDelete=FirebaseDatabase.getInstance().getReference("geolocation").child("Kupondol").child(String.valueOf(maxid));
+                ktDelete.removeValue();
+
             }
 
             @Override
@@ -271,6 +295,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onKeyEntered(String key, GeoLocation location) {
                 sendNotfication("SCMS", String.format("%s entered the 2nd geofence", key));
+
+
             }
 
             @Override

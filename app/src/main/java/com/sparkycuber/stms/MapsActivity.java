@@ -257,9 +257,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onKeyExited(String key) {
                 sendNotfication("SCMS", String.format("%s is no longer in the first geofence", key));
-                DatabaseReference ktDelete=FirebaseDatabase.getInstance().getReference("geolocation").child("Kupondol").child(String.valueOf(maxid));
-                ktDelete.removeValue();
-                maxid=maxid-1;
+
 
             }
 
@@ -303,6 +301,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onKeyExited(String key) {
                 sendNotfication("SCMS", String.format("%s is no longer in 2nd geofence", key));
+                DatabaseReference ktDelete=FirebaseDatabase.getInstance().getReference("geolocation").child("Kupondol").child(String.valueOf(maxid));
+                ktDelete.removeValue();
+                maxid=maxid-1;
             }
 
             @Override

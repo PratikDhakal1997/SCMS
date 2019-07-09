@@ -23,6 +23,8 @@ import com.google.android.gms.location.LocationListener;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.firebase.geofire.GeoFire;
@@ -48,6 +50,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
 import java.util.Random;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
@@ -56,6 +59,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LocationListener {
 
     private GoogleMap mMap;
+    //MapsActivity context= MapsActivity.this;
 
 
 
@@ -74,12 +78,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     DatabaseReference ref,kupondolref;// change 1
     long maxid=0; //change 1.1
     GeoFire geoFire;
-
-
     Marker mCurrent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+         Button getCongestion= findViewById(R.id.getCongestion);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -107,6 +111,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         setUpLocation();
+
+
 
     }
 
@@ -376,8 +382,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-}
 
+public void getCongestion(View v) throws IOException{
+
+Button getcongestion= findViewById(R.id.getCongestion);
+if(maxid==1)
+    Toast.makeText(this,"high congestion",Toast.LENGTH_LONG).show();
+else
+    Toast.makeText(this,"low congestion",Toast.LENGTH_LONG).show();
+
+
+}
+}
 
 
 

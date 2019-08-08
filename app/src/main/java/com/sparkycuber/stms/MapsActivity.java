@@ -236,9 +236,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+    mMap.setMaxZoomPreference(17);
 
-
-        //create dangerous area
+        //create geofence area
         LatLng dangerous_area = new LatLng(27.688828, 85.316173);
         mMap.addCircle(new CircleOptions()
 
@@ -250,7 +250,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         );
 
-        //Add geoquery here
+        // geoquery here
         //0.5f =0.5 km = 500 m
         GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(dangerous_area.latitude, dangerous_area.longitude), 0.01f);
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {

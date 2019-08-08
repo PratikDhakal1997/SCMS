@@ -4,23 +4,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
-
 import android.Manifest;
+
 import android.app.Notification;
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
+
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.location.Location;
 
+import android.location.Location;
 import com.firebase.geofire.GeoQuery;
 import com.firebase.geofire.GeoQueryEventListener;
 import com.google.android.gms.location.LocationListener;
 
-import android.os.Build;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -42,8 +43,7 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polygon;
-import com.google.android.gms.maps.model.PolygonOptions;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -386,7 +386,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 public void getCongestion(View v) throws IOException{
 
 Button getcongestion= findViewById(R.id.getCongestion);
-if(maxid==1)
+    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(27.689428, 85.316700),17.0f));
+
+if(maxid>4)
     Toast.makeText(this,"high congestion",Toast.LENGTH_LONG).show();
 else
     Toast.makeText(this,"low congestion",Toast.LENGTH_LONG).show();
